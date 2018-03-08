@@ -1,33 +1,65 @@
- const React = require('react');
- const ReactDOM = require('react-dom');
+const React = require('react');
+const ReactDOM = require('react-dom');
 
+class TodoApp extends React.Component {
 
- class HelloMessage extends React.Component {
-    render() {
-      return React.createElement(
-        "div",
-        { class: 'hello-message' },
-        "Hello ",
-        this.props.name
-      );
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      todoitems: []
+    };
   }
-  
-  ReactDOM.render(React.createElement(HelloMessage, { name: "Taylor" }), document.getElementById('root'));
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        todoitems: [
+          { id: '01', title: "Do it", text: " really do it " },
+          { id: '02', title: "Oh reilly", text: " come on" },
+          { id: '03', title: "Kamlay", text: " come on" }
+        ]
+      });
+
+    }, 2000);
+
+  }
 
 
+  render() {
+    return React.createElement(
+      'div',
+      null,
+      [React.createElement('h3', { key: 'apptitle' }, "Todo List"), React.createElement(TodoList, { key: 'todolist', todoitems: this.state.todoitems })]
+    );
+  }
+}
 
-// ReactDOM.render(
-//   <h1>Hello, world!</h1>,
-//   document.getElementById('root')
-// );
+class TodoList extends React.Component {
+  render() {
+    return React.createElement(
+      "ul",
+      { className: 'todo-list' },
+      this.props.todoitems.map(item => React.createElement(
+        TodoItem,
+        { key: item.id, id: item.id, title: item.title, text: item.text }
+      ))
+    );
+  }
+}
+
+class TodoItem extends React.Component {
+  render() {
+    return React.createElement(
+      'li',
+      {
+        className: 'todo-item',
+      },
+      [React.createElement('h5', { key: 'itemtitle' }, null, this.props.title), React.createElement('p', { key: 'text' }, this.props.text)]
+    );
+  }
+}
 
 
-
-
-document.getElementById('test-button').addEventListener('click', function () {
-    console.log("terror");
-    document.getElementById("test-button").innerHTML = "YOU CLICKED ME!";
-});
+ReactDOM.render(React.createElement(TodoApp), document.getElementById('root'));
 
 
