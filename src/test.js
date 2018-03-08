@@ -1,5 +1,27 @@
+"use strict";
+
 const React = require('react');
 const ReactDOM = require('react-dom');
+const Mongo = require('mongodb').MongoClient;
+
+const url = "mongodb://localhost:27017/";
+const dbName = "TEST";
+
+class TestButton extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(e) {
+    console.log("clicked");
+  }
+
+  render() {
+    return React.createElement('button', { onClick: this.handleClick }, "Test");
+  }
+}
 
 class TodoApp extends React.Component {
 
@@ -11,17 +33,21 @@ class TodoApp extends React.Component {
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      this.setState({
-        todoitems: [
-          { id: '01', title: "Do it", text: " really do it " },
-          { id: '02', title: "Oh reilly", text: " come on" },
-          { id: '03', title: "Kamlay", text: " come on" }
-        ]
-      });
-
-    }, 2000);
-
+    let dbs = null;
+    Mongo
+      .connect(url)
+      .then(d => {
+        dbs = d;
+        return d.db(dbName)
+          .collection('TodoItems')
+          .find()
+          .toArray();
+      })
+      .then(col => {
+        this.setState({ todoitems: col });
+        dbs.close();
+      })
+      .catch((err) => { throw err; });
   }
 
 
@@ -29,7 +55,9 @@ class TodoApp extends React.Component {
     return React.createElement(
       'div',
       null,
-      [React.createElement('h3', { key: 'apptitle' }, "Todo List"), React.createElement(TodoList, { key: 'todolist', todoitems: this.state.todoitems })]
+      React.createElement(TestButton),
+      React.createElement('h3', null, "Todo List"),
+      React.createElement(TodoList, { todoitems: this.state.todoitems })
     );
   }
 }
@@ -41,7 +69,7 @@ class TodoList extends React.Component {
       { className: 'todo-list' },
       this.props.todoitems.map(item => React.createElement(
         TodoItem,
-        { key: item.id, id: item.id, title: item.title, text: item.text }
+        { key: item._id, id: item.id, title: item.Title, text: item.Description }
       ))
     );
   }
@@ -54,7 +82,8 @@ class TodoItem extends React.Component {
       {
         className: 'todo-item',
       },
-      [React.createElement('h5', { key: 'itemtitle' }, null, this.props.title), React.createElement('p', { key: 'text' }, this.props.text)]
+      React.createElement('h5', null, this.props.title),
+      React.createElement('p', null, this.props.text)
     );
   }
 }
