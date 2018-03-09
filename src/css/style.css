@@ -1,3 +1,5 @@
-.todo-item{
+.todo-item {
     margin: 50px;
 }
+
+.my-ui-text { -webkit-user-select:none; }

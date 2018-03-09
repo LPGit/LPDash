@@ -19,7 +19,7 @@ class TestButton extends React.Component {
   }
 
   render() {
-    return React.createElement('button', { onClick: this.handleClick }, "Test");
+    return React.createElement('button', { onClick: this.handleClick, className: 'button primary' }, "Test");
   }
 }
 
@@ -44,7 +44,8 @@ class TodoApp extends React.Component {
           .toArray();
       })
       .then(col => {
-        this.setState({ todoitems: col });
+        let items = col.map(i => { return { id: i._id, title: i.Title, text: i.Description } });
+        this.setState({ todoitems: items });
         dbs.close();
       })
       .catch((err) => { throw err; });
@@ -69,7 +70,7 @@ class TodoList extends React.Component {
       { className: 'todo-list' },
       this.props.todoitems.map(item => React.createElement(
         TodoItem,
-        { key: item._id, id: item.id, title: item.Title, text: item.Description }
+        { key: item.id, item: item }
       ))
     );
   }
@@ -79,11 +80,9 @@ class TodoItem extends React.Component {
   render() {
     return React.createElement(
       'li',
-      {
-        className: 'todo-item',
-      },
-      React.createElement('h5', null, this.props.title),
-      React.createElement('p', null, this.props.text)
+      { className: 'todo-item', },
+      React.createElement('h5', null, this.props.item.title),
+      React.createElement('p', null, this.props.item.text)
     );
   }
 }
