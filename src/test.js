@@ -19,7 +19,7 @@ class TestButton extends React.Component {
   }
 
   render() {
-    return React.createElement('button', { onClick: this.handleClick, className: 'button primary' }, "Test");
+    return React.createElement('button', { onClick: this.handleClick, className: 'btn btn-primary' }, "Test");
   }
 }
 
@@ -67,7 +67,7 @@ class TodoList extends React.Component {
   render() {
     return React.createElement(
       "ul",
-      { className: 'todo-list' },
+      { className: 'list-group' },
       this.props.todoitems.map(item => React.createElement(
         TodoItem,
         { key: item.id, item: item }
@@ -80,7 +80,7 @@ class TodoItem extends React.Component {
   render() {
     return React.createElement(
       'li',
-      { className: 'todo-item', },
+      { className: 'list-group-item', },
       React.createElement('h5', null, this.props.item.title),
       React.createElement('p', null, this.props.item.text)
     );
