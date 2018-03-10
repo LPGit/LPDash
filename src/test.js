@@ -19,7 +19,15 @@ class TestButton extends React.Component {
   }
 
   render() {
-    return React.createElement('button', { onClick: this.handleClick, className: 'btn btn-primary' }, "Test");
+    return (
+      <button
+        className="btn btn-primary"
+        onClick={this.handleClick}
+      >
+        Test
+      </button>
+    );
+    // React.createElement('button', { onClick: this.handleClick, className: 'btn btn-primary' }, "Test");
   }
 }
 

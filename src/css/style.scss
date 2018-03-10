@@ -1,0 +1,10 @@
+.dotted {
+    border: 1px dotted #ff0000;
+}
+
+$theme-colors: ( "primary": #FFC107);
+$enable-rounded: false;
+@import "scssFix.scss";
+html {
+    margin: 20px;
+}
