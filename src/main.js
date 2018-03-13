@@ -7,7 +7,7 @@ const url = require('url');
 let win;
 
 function createWindow() {
-    win = new BrowserWindow({ width: 800, height: 600, backgroundColor: '#FFF'/* important for cleartype*/ });
+    win = new BrowserWindow({ width: 1200, height: 800, backgroundColor: '#FFF'/* important for cleartype*/ });
     win.loadURL(url.format({
         pathname: path.join(__dirname, 'index.html'),
         protocol: 'file',

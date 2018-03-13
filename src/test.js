@@ -86,13 +86,24 @@ class TodoList extends React.Component {
 
 class TodoItem extends React.Component {
   render() {
-    return React.createElement(
-      'li',
-      { className: 'list-group-item', },
-      React.createElement('h5', null, this.props.item.title),
-      React.createElement('p', null, this.props.item.text)
-    );
+    return (
+      <li className="list-item">
+        <div className="inner-box">
+          <h5>{this.props.item.title}</h5>
+          <p>{this.props.item.text}</p>
+        </div>
+      </li>
+    )
   }
+
+  // render() {
+  //   return React.createElement(
+  //     'li',
+  //     { className: 'list-item', },
+  //     React.createElement('h5', null, this.props.item.title),
+  //     React.createElement('p', null, this.props.item.text)
+  //   );
+  // }
 }
 
 

@@ -8,3 +8,22 @@ $enable-rounded: false;
 html {
     margin: 20px;
 }
+
+.list-item {
+    @extend .list-group-item;
+    padding: 0px;
+    border-left: 0px;
+    .inner-box {
+        border-left: 10px solid;
+        border-color: theme-color("primary");
+        padding: 10px;
+        height: 5rem;
+    }
+    p {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        padding-bottom: 0px;
+        margin-bottom: 0px;
+    }
+}
